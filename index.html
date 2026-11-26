@@ -1248,17 +1248,6 @@ function updateLotStats() {
       document.getElementById('statTotalLots').textContent = `${cards.length} Lots`;
       document.getElementById('statAvgSca').textContent = `${avgSca} SCA`;
     }
-function updateLotStats() {
-      const lotsSection = document.getElementById('lots');
-      const cards = lotsSection.querySelectorAll('.grid > div');
-      const scaMatches = lotsSection.textContent.match(/(\d+(?:\.\d+)?)\s*SCA Score/g) || [];
-      let totalSca = 0;
-      scaMatches.forEach(item => { totalSca += parseFloat(item); });
-
-      const avgSca = scaMatches.length > 0 ? (totalSca / scaMatches.length).toFixed(2) : '0.00';
-      document.getElementById('statTotalLots').textContent = `${cards.length} Lots`;
-      document.getElementById('statAvgSca').textContent = `${avgSca} SCA`;
-    }
 
     // Initialize App
     updateAdminUI();
