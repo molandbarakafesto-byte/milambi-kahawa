@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="sw" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chama cha Msingi Milambi | Uzalishaji, Ufuatiliaji & Masoko ya Kahawa</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- QR Code Generator Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in { animation: fadeInUp 0.45s ease-out forwards; }
+    @media print {
+      body * { visibility: hidden; }
+      #receiptPrintArea, #receiptPrintArea * { visibility: visible; }
+      #receiptPrintArea { position: absolute; left: 0; top: 0; width: 100%; }
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+
+  <!-- Top Navigation -->
+  <header class="bg-blue-900 text-white sticky top-0 z-40 shadow-md">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5">
+        <span class="bg-white text-blue-900 font-extrabold px-2.5 py-1 rounded text-sm">CMM</span>
+        <div>
+          <h1 class="font-bold text-lg leading-tight">Chama cha Msingi Milambi</h1>
+          <p class="text-xs text-blue-200">Uzalishaji, Ufuatiliaji (QR) & Masoko ya Kahawa</p>
+        </div>
+      </div>
+      <nav class="flex flex-wrap gap-1.5 text-xs md:text-sm font-medium">
+        <button onclick="showSection('prices')" class="px-2.5 py-1.5 rounded hover:bg-blue-800 transition">Bei Elekezi</button>
+        <button onclick="showSection('schedule-news')" class="px-2.5 py-1.5 rounded hover:bg-blue-800 transition">Matangazo & Ratiba</button>
+        <button onclick="showSection('calculator')" class="px-2.5 py-1.5 rounded hover:bg-blue-800 transition">Kikokotoo</button>
+        <button onclick="showSection('lots')" class="px-2.5 py-1.5 rounded hover:bg-blue-800 transition">Soko & QR</button>
+        <button onclick="showSection('production')" class="px-2.5 py-1.5 rounded hover:bg-blue-800 transition">Daftari & Risiti</button>
+        <button onclick="openModal('settingsModal')" class="px-2.5 py-1.5 rounded bg-blue-800 hover:bg-blue-700 border border-blue-600 transition">Mipangilio</button>
+        <button onclick="openModal('inquiryModal')" class="bg-white text-blue-900 font-semibold px-3 py-1.5 rounded hover:bg-blue-100 transition">Oda ya Mnunuzi</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <section class="bg-gradient-to-r from-blue-900 via-blue-800 to-blue-700 text-white py-12 px-4">
+    <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center animate-fade-in">
+      <div>
+        <span class="inline-block bg-blue-950/60 text-blue-200 text-xs font-semibold px-3 py-1 rounded-full mb-3">
+          Msimu wa Mavuno 2026/2027 &bull; Milambi AMCOS
+        </span>
+        <h2 class="text-3xl md:text-4xl font-extrabold leading-tight mb-4">
+          Uwazi Kuanzia Shambani Hadi Kikombeni (Farm-to-Cup)
+        </h2>
+        <p class="text-blue-100 mb-6 text-sm md:text-base">
+          Fuatilia bei za kahawa, ratiba ya siku za kupima ghalani, matangazo muhimu ya Chama cha Msingi Milambi, na risiti za malipo ya wanachama kwa uwazi.
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <button onclick="openModal('deliveryModal')" class="bg-white text-blue-900 font-bold px-5 py-2.5 rounded-lg shadow hover:bg-blue-50 transition">
+            + Pima & Toa Risiti
+          </button>
+          <a href="#schedule-news" class="border border-white/70 text-white font-semibold px-5 py-2.5 rounded-lg hover:bg-white/10 transition">
+            Ratiba ya Kupima Ghalani
+          </a>
+        </div>
+      </div>
+      <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5 grid grid-cols-2 gap-4 text-center">
+        <div class="bg-blue-950/50 p-4 rounded-lg">
+          <p class="text-xs text-blue-200 uppercase">Jumla ya Mavuno</p>
+          <p id="statTotalKg" class="text-2xl font-extrabold mt-1">14,850 kg</p>
+        </div>
+        <div class="bg-blue-950/50 p-4 rounded-lg">
+          <p class="text-xs text-blue-200 uppercase">Wakulima Wanachama</p>
+          <p class="text-2xl font-extrabold mt-1">312</p>
+        </div>
+        <div class="bg-blue-950/50 p-4 rounded-lg">
+          <p class="text-xs text-blue-200 uppercase">Wastani wa Ladha</p>
+          <p class="text-2xl font-extrabold mt-1">86.5 SCA</p>
+        </div>
+        <div class="bg-blue-950/50 p-4 rounded-lg">
+          <p class="text-xs text-blue-200 uppercase">Makundi (Lots) Tayari</p>
+          <p class="text-2xl font-extrabold mt-1">3 Lots</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="max-w-6xl mx-auto px-4 py-10 space-y-14">
+
+    <!-- Section 1: Bei Elekezi -->
+    <section id="prices" class="animate-fade-in">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-6">
+        <div>
+          <h3 class="text-2xl font-bold text-blue-950">Bei Elekezi za Shambani (TZS/kg)</h3>
+          <p class="text-sm text-slate-600">Zinasasishwa kila siku na uongozi wa Chama cha Msingi Milambi.</p>
+        </div>
+        <button onclick="openModal('settingsModal')" class="text-xs bg-blue-100 text-blue-800 font-semibold px-3 py-2 rounded-lg hover:bg-blue-200 transition">
+          Badili Bei & Namba ya WhatsApp
+        </button>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white border border-blue-100 rounded-xl p-6 shadow-sm">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded">Daraja A (AA/AB)</span>
+            <span class="text-xs text-emerald-600 font-semibold">Washed Arabica</span>
+          </div>
+          <p class="text-3xl font-extrabold text-blue-950 mt-3">TZS <span id="displayPriceA">7,500</span> <span class="text-sm font-normal text-slate-500">/ kg</span></p>
+          <p class="text-xs text-slate-500 mt-2">Unyevu &le; 11.5%, punje kubwa zilizochambuliwa vizuri.</p>
+        </div>
+
+        <div class="bg-white border border-blue-100 rounded-xl p-6 shadow-sm">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider bg-blue-100 text-blue-800 px-2.5 py-0.5 rounded">Daraja B (PB/C)</span>
+            <span class="text-xs text-blue-600 font-semibold">Washed Arabica</span>
+          </div>
+          <p class="text-3xl font-extrabold text-blue-950 mt-3">TZS <span id="displayPriceB">5,800</span> <span class="text-sm font-normal text-slate-500">/ kg</span></p>
+          <p class="text-xs text-slate-500 mt-2">Parchment ya kawaida, unyevu &le; 12%, ladha safi.</p>
+        </div>
+
+        <div class="bg-white border border-blue-100 rounded-xl p-6 shadow-sm">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded">Maganda / Natural</span>
+            <span class="text-xs text-amber-600 font-semibold">Sun-Dried Cherry</span>
+          </div>
+          <p class="text-3xl font-extrabold text-blue-950 mt-3">TZS <span id="displayPriceC">3,400</span> <span class="text-sm font-normal text-slate-500">/ kg</span></p>
+          <p class="text-xs text-slate-500 mt-2">Kahawa kavu ya maganda iliyoanikwa kwenye vichanja.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 1B: Matangazo ya Chama & Ratiba ya Kupima Kahawa Ghalani -->
+    <section id="schedule-news" class="grid lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Ratiba ya Kupima Kahawa Ghalani (7 cols) -->
+      <div class="lg:col-span-7 bg-white border border-blue-100 rounded-2xl p-6 shadow-sm">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+          <div>
+            <h3 class="text-xl font-bold text-blue-950">Ratiba ya Kupima Kahawa Ghalani</h3>
+            <p class="text-xs text-slate-600">Siku na muda wa kupokea kahawa katika ghala la Chama cha Msingi Milambi.</p>
+          </div>
+          <button onclick="openModal('scheduleModal')" class="text-xs bg-blue-800 text-white font-semibold px-3 py-2 rounded-lg hover:bg-blue-900 transition">
+            + Ongeza Ratiba
+          </button>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-sm">
+            <thead>
+              <tr class="bg-blue-50 text-blue-950 border-b border-blue-100 text-xs">
+                <th class="py-2.5 px-3 font-semibold">Siku & Tarehe</th>
+                <th class="py-2.5 px-3 font-semibold">Kitongoji / Kanda</th>
+                <th class="py-2.5 px-3 font-semibold">Muda</th>
+                <th class="py-2.5 px-3 font-semibold">Aina ya Kahawa</th>
+                <th class="py-2.5 px-3 font-semibold">Miadi</th>
+              </tr>
+            </thead>
+            <tbody id="scheduleTableBody" class="divide-y divide-slate-100 text-xs md:text-sm">
+              <!-- Inajazwa na JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Ubao wa Matangazo ya Chama (5 cols) -->
+      <div class="lg:col-span-5 bg-white border border-blue-100 rounded-2xl p-6 shadow-sm">
+        <div class="flex items-center justify-between gap-2 mb-4">
+          <div>
+            <h3 class="text-xl font-bold text-blue-950">Matangazo ya Chama</h3>
+            <p class="text-xs text-slate-600">Taarifa rasmi kwa wanachama na wakulima.</p>
+          </div>
+          <button onclick="openModal('announcementModal')" class="text-xs bg-blue-100 text-blue-900 font-semibold px-3 py-2 rounded-lg hover:bg-blue-200 transition">
+            + Tangazo Jipya
+          </button>
+        </div>
+
+        <div id="announcementsList" class="space-y-3 max-h-[360px] overflow-y-auto pr-1">
+          <!-- Inajazwa na JavaScript -->
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Section 2: Kikokotoo cha Malipo & Pembejeo -->
+    <section id="calculator" class="bg-white border border-blue-100 rounded-2xl p-6 md:p-8 shadow-sm">
+      <h3 class="text-2xl font-bold text-blue-950 mb-1">Kikokotoo cha Malipo ya Mkulima</h3>
+      <p class="text-sm text-slate-600 mb-6">Kadiria malipo halisi baada ya kutoa ushuru wa chama na deni la pembejeo.</p>
+
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div class="space-y-4">
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Chagua Daraja la Kahawa</label>
+            <select id="calcGrade" onchange="calculatePayout()" class="w-full border border-slate-300 rounded-lg px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-600">
+              <option value="A">Daraja A - Washed Parchment (TZS 7,500/kg)</option>
+              <option value="B">Daraja B - Standard Parchment (TZS 5,800/kg)</option>
+              <option value="C">Maganda / Natural Cherry (TZS 3,400/kg)</option>
+            </select>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-1">Uzito Halisi (kg)</label>
+              <input type="number" id="calcWeight" value="100" min="1" oninput="calculatePayout()" class="w-full border border-slate-300 rounded-lg px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-600" />
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-1">Ushuru wa Chama (%)</label>
+              <input type="number" id="calcLevy" value="3" min="0" max="20" oninput="calculatePayout()" class="w-full border border-slate-300 rounded-lg px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-600" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-slate-700 mb-1">Makato ya Deni la Pembejeo (TZS)</label>
+            <input type="number" id="calcInputLoan" value="50000" min="0" oninput="calculatePayout()" class="w-full border border-slate-300 rounded-lg px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-blue-600" placeholder="Mfano: 50000" />
+          </div>
+        </div>
+
+        <div class="bg-blue-50 border border-blue-200 rounded-xl p-6 space-y-3">
+          <div class="flex justify-between text-sm">
+            <span class="text-slate-600">Bei kwa Kilo:</span>
+            <span id="outUnit" class="font-semibold text-slate-900">TZS 7,500 / kg</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-slate-600">Thamani Ghafi (Gross):</span>
+            <span id="outGross" class="font-semibold text-slate-900">TZS 750,000</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-slate-600">Ushuru wa Chama:</span>
+            <span id="outDeduction" class="font-semibold text-red-600">- TZS 22,500</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-slate-600">Makato ya Pembejeo:</span>
+            <span id="outLoanDeduction" class="font-semibold text-amber-700">- TZS 50,000</span>
+          </div>
+          <hr class="border-blue-200" />
+          <div class="flex justify-between items-baseline pt-1">
+            <span class="font-bold text-blue-950">Malipo Halisi (Net):</span>
+            <span id="outNet" class="text-2xl font-extrabold text-blue-800">TZS 677,500</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Soko la Wanunuzi & Farm-to-Cup QR Traceability -->
+    <section id="lots">
+      <div class="mb-6">
+        <h3 class="text-2xl font-bold text-blue-950">Makundi ya Kahawa & Ufuatiliaji (QR Traceability)</h3>
+        <p class="text-sm text-slate-600">Bonyeza <strong>"Ona QR & Asili"</strong> kuthibitisha chanzo cha kahawa kutoka Milambi au tuma oda ya sampuli.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <!-- Lot 1 -->
+        <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between">
+          <div class="p-6">
+            <div class="flex justify-between items-start mb-3">
+              <span class="bg-blue-900 text-white text-xs font-bold px-2.5 py-1 rounded">LOT #CMM-01</span>
+              <span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded">87.25 SCA Score</span>
+            </div>
+            <h4 class="font-bold text-lg text-slate-900">Milambi Washed Arabica AA</h4>
+            <p class="text-xs text-slate-500 mt-1">Mwinuko: 1,750m &bull; Aina: Bourbon & Kent</p>
+            <p class="text-sm text-slate-600 mt-3"><strong>Ladha:</strong> Chungwa, chokoleti nyeusi, na utamu wa miwa.</p>
+            <p class="text-sm font-semibold text-blue-900 mt-3">Kiasi Kilichopo: 4,200 kg (Mifuko 70)</p>
+          </div>
+          <div class="bg-slate-50 px-4 py-3 border-t border-slate-100 flex gap-2">
+            <button onclick="openTraceabilityQR('LOT #CMM-01', 'Milambi Washed Arabica AA', 'Chama cha Msingi Milambi', '1,750m ASL', 'Bourbon & Kent', '87.25 pts')" class="flex-1 border border-blue-800 text-blue-900 text-xs font-semibold py-2 rounded hover:bg-blue-50 transition">
+              Ona QR & Asili
+            </button>
+            <button onclick="selectLotForInquiry('LOT #CMM-01 (Milambi Washed Arabica AA)')" class="flex-1 bg-blue-800 text-white text-xs font-semibold py-2 rounded hover:bg-blue-900 transition">
+              Omba Sampuli
+            </button>
+          </div>
+        </div>
+
+        <!-- Lot 2 -->
+        <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between">
+          <div class="p-6">
+            <div class="flex justify-between items-start mb-3">
+              <span class="bg-blue-900 text-white text-xs font-bold px-2.5 py-1 rounded">LOT #CMM-02</span>
+              <span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded">86.00 SCA Score</span>
+            </div>
+            <h4 class="font-bold text-lg text-slate-900">Milambi Honey Peaberry</h4>
+            <p class="text-xs text-slate-500 mt-1">Mwinuko: 1,680m &bull; Aina: N39 & KP423</p>
+            <p class="text-sm text-slate-600 mt-3"><strong>Ladha:</strong> Matunda mabivu, caramel, na uzito laini mdomoni.</p>
+            <p class="text-sm font-semibold text-blue-900 mt-3">Kiasi Kilichopo: 1,800 kg (Mifuko 30)</p>
+          </div>
+          <div class="bg-slate-50 px-4 py-3 border-t border-slate-100 flex gap-2">
+            <button onclick="openTraceabilityQR('LOT #CMM-02', 'Milambi Honey Peaberry', 'Chama cha Msingi Milambi', '1,680m ASL', 'N39 & KP423', '86.00 pts')" class="flex-1 border border-blue-800 text-blue-900 text-xs font-semibold py-2 rounded hover:bg-blue-50 transition">
+              Ona QR & Asili
+            </button>
+            <button onclick="selectLotForInquiry('LOT #CMM-02 (Milambi Honey Peaberry)')" class="flex-1 bg-blue-800 text-white text-xs font-semibold py-2 rounded hover:bg-blue-900 transition">
+              Omba Sampuli
+            </button>
+          </div>
+        </div>
+
+        <!-- Lot 3 -->
+        <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between">
+          <div class="p-6">
+            <div class="flex justify-between items-start mb-3">
+              <span class="bg-blue-900 text-white text-xs font-bold px-2.5 py-1 rounded">LOT #CMM-03</span>
+              <span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded">85.50 SCA Score</span>
+            </div>
+            <h4 class="font-bold text-lg text-slate-900">Milambi Sun-Dried Natural</h4>
+            <p class="text-xs text-slate-500 mt-1">Mwinuko: 1,620m &bull; Aina: Bourbon</p>
+            <p class="text-sm text-slate-600 mt-3"><strong>Ladha:</strong> Beri za porini, kakao, na harufu tamu ya mvinyo.</p>
+            <p class="text-sm font-semibold text-blue-900 mt-3">Kiasi Kilichopo: 3,000 kg (Mifuko 50)</p>
+          </div>
+          <div class="bg-slate-50 px-4 py-3 border-t border-slate-100 flex gap-2">
+            <button onclick="openTraceabilityQR('LOT #CMM-03', 'Milambi Sun-Dried Natural', 'Chama cha Msingi Milambi', '1,620m ASL', 'Bourbon', '85.50 pts')" class="flex-1 border border-blue-800 text-blue-900 text-xs font-semibold py-2 rounded hover:bg-blue-50 transition">
+              Ona QR & Asili
+            </button>
+            <button onclick="selectLotForInquiry('LOT #CMM-03 (Milambi Sun-Dried Natural)')" class="flex-1 bg-blue-800 text-white text-xs font-semibold py-2 rounded hover:bg-blue-900 transition">
+              Omba Sampuli
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Kadi ya Mkulima, Makato ya Pembejeo & Risiti -->
+    <section id="production" class="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm">
+      <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+        <div>
+          <h3 class="text-2xl font-bold text-blue-950">Daftari la Mavuno & Kadi za Wanachama</h3>
+          <p class="text-sm text-slate-600">Rekodi kahawa iliyopokelewa ghalani, kata deni la pembejeo, na utoe risiti ya WhatsApp/Print.</p>
+        </div>
+        <button onclick="openModal('deliveryModal')" class="bg-blue-800 text-white text-sm font-semibold px-4 py-2.5 rounded-lg hover:bg-blue-900 transition">
+          + Ingiza Mavuno Mapya
+        </button>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse text-sm">
+          <thead>
+            <tr class="bg-blue-50 text-blue-950 border-b border-blue-100">
+              <th class="py-3 px-4 font-semibold">Tarehe</th>
+              <th class="py-3 px-4 font-semibold">Jina la Mkulima</th>
+              <th class="py-3 px-4 font-semibold">Daraja</th>
+              <th class="py-3 px-4 font-semibold">Uzito</th>
+              <th class="py-3 px-4 font-semibold">Pembejeo</th>
+              <th class="py-3 px-4 font-semibold">Malipo Halisi</th>
+              <th class="py-3 px-4 font-semibold">Risiti</th>
+            </tr>
+          </thead>
+          <tbody id="deliveryTableBody" class="divide-y divide-slate-100">
+            <!-- Inajazwa na JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-blue-950 text-blue-200 py-8 px-4 mt-16 text-sm">
+    <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center gap-4">
+      <div>
+        <p class="font-bold text-white">Chama cha Msingi Milambi (AMCOS)</p>
+        <p class="text-xs text-blue-300 mt-1">Namba ya WhatsApp ya Chama: <span id="footerWaDisplay" class="font-semibold text-white">+255 700 000 000</span></p>
+      </div>
+      <a id="footerWaLink" href="https://wa.me/255700000000?text=Habari%20Chama%20cha%20Msingi%20Milambi%2C%20nahitaji%20maelezo%20zaidi%20kuhusu%20kahawa." target="_blank" class="bg-emerald-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-emerald-700 transition">
+        Wasiliana WhatsApp
+      </a>
+    </div>
+  </footer>
+
+  <!-- Modal: Ongeza Ratiba ya Kupima Kahawa Ghalani -->
+  <div id="scheduleModal" class="hidden fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl max-w-md w-full p-6 shadow-xl">
+      <div class="flex justify-between items-center mb-4">
+        <h4 class="font-bold text-lg text-blue-950">Ongeza Siku ya Kupima Ghalani</h4>
+        <button onclick="closeModal('scheduleModal')" class="text-slate-400 hover:text-slate-700 font-bold text-xl">&times;</button>
+      </div>
+      <form onsubmit="addSchedule(event)" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Siku & Tarehe</label>
+          <input type="text" id="schedDay" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" placeholder="Mfano: Jumatatu, 30 Nov 2026" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Kitongoji / Kanda Husika</label>
+          <input type="text" id="schedZone" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" placeholder="Mfano: Milambi Kati & Kaskazini" />
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Muda wa Kupima</label>
+            <input type="text" id="schedTime" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" value="08:00 Asubuhi - 04:00 Jioni" />
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Aina ya Kahawa</label>
+            <input type="text" id="schedType" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" value="Parchment (Daraja A & B)" />
+          </div>
+        </div>
+        <button type="submit" class="w-full bg-blue-800 text-white font-semibold py-2.5 rounded-lg hover:bg-blue-900 transition">
+          Hifadhi Ratiba
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Ongeza Tangazo la Chama -->
+  <div id="announcementModal" class="hidden fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl max-w-md w-full p-6 shadow-xl">
+      <div class="flex justify-between items-center mb-4">
+        <h4 class="font-bold text-lg text-blue-950">Chapisha Tangazo Jipya</h4>
+        <button onclick="closeModal('announcementModal')" class="text-slate-400 hover:text-slate-700 font-bold text-xl">&times;</button>
+      </div>
+      <form onsubmit="addAnnouncement(event)" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Kichwa cha Tangazo</label>
+          <input type="text" id="annTitle" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" placeholder="Mfano: Malipo ya Awamu ya Pili" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Aina / Kipaumbele</label>
+          <select id="annTag" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm">
+            <option value="Muhimu">Muhimu</option>
+            <option value="Malipo">Malipo</option>
+            <option value="Pembejeo">Pembejeo</option>
+            <option value="Kikao">Kikao cha Chama</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Maelezo Kamili</label>
+          <textarea id="annBody" rows="3" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" placeholder="Andika ujumbe kwa wakulima..."></textarea>
+        </div>
+        <button type="submit" class="w-full bg-blue-800 text-white font-semibold py-2.5 rounded-lg hover:bg-blue-900 transition">
+          Chapisha Tangazo
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 1: Ingiza Mavuno & Makato ya Pembejeo -->
+  <div id="deliveryModal" class="hidden fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl max-w-md w-full p-6 shadow-xl">
+      <div class="flex justify-between items-center mb-4">
+        <h4 class="font-bold text-lg text-blue-950">Sajili Mavuno ya Mkulima</h4>
+        <button onclick="closeModal('deliveryModal')" class="text-slate-400 hover:text-slate-700 font-bold text-xl">&times;</button>
+      </div>
+      <form onsubmit="addDelivery(event)" class="space-y-3.5">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Jina Kamili la Mkulima</label>
+          <input type="text" id="farmerName" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" placeholder="Mfano: Baraka Moland" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Namba ya Simu ya Mkulima (kwa WhatsApp)</label>
+          <input type="tel" id="farmerPhone" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" placeholder="Mfano: 255712345678" />
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Daraja la Kahawa</label>
+            <select id="deliveryGrade" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm">
+              <option value="A">Daraja A</option>
+              <option value="B">Daraja B</option>
+              <option value="C">Maganda / Natural</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Uzito (kg)</label>
+            <input type="number" id="deliveryWeight" required min="1" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" placeholder="Mfano: 150" />
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Makato ya Deni la Pembejeo (TZS)</label>
+          <input type="number" id="deliveryLoan" value="0" min="0" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" placeholder="0 kama hana deni" />
+        </div>
+        <button type="submit" class="w-full bg-blue-800 text-white font-semibold py-2.5 rounded-lg hover:bg-blue-900 transition">
+          Hifadhi & Tengeneza Risiti
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 2: Risiti ya Kidijitali ya Mkulima -->
+  <div id="receiptModal" class="hidden fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl max-w-sm w-full p-6 shadow-xl">
+      <div id="receiptPrintArea" class="border border-dashed border-slate-300 rounded-lg p-4 bg-slate-50 text-sm space-y-2">
+        <div class="text-center border-b border-slate-200 pb-2">
+          <h4 class="font-extrabold text-blue-950 text-base">CHAMA CHA MSINGI MILAMBI</h4>
+          <p class="text-xs text-slate-500">Risiti ya Mapokezi & Malipo ya Kahawa</p>
+        </div>
+        <div class="flex justify-between text-xs pt-1">
+          <span class="text-slate-500">Namba ya Risiti:</span>
+          <span id="recId" class="font-mono font-bold">#CMM-1001</span>
+        </div>
+        <div class="flex justify-between text-xs">
+          <span class="text-slate-500">Tarehe:</span>
+          <span id="recDate">2026-11-26</span>
+        </div>
+        <div class="flex justify-between text-xs">
+          <span class="text-slate-500">Mkulima:</span>
+          <span id="recFarmer" class="font-bold">Juma Mwakalinga</span>
+        </div>
+        <hr class="border-slate-200" />
+        <div class="flex justify-between text-xs">
+          <span class="text-slate-600">Daraja & Uzito:</span>
+          <span id="recWeightGrade" class="font-semibold">Daraja A (240 kg)</span>
+        </div>
+        <div class="flex justify-between text-xs">
+          <span class="text-slate-600">Thamani Ghafi:</span>
+          <span id="recGross">TZS 1,800,000</span>
+        </div>
+        <div class="flex justify-between text-xs text-red-600">
+          <span>Makato ya Pembejeo:</span>
+          <span id="recLoan">- TZS 100,000</span>
+        </div>
+        <hr class="border-slate-300" />
+        <div class="flex justify-between font-bold text-blue-950 text-base pt-1">
+          <span>MALIPO HALISI:</span>
+          <span id="recNet">TZS 1,700,000</span>
+        </div>
+      </div>
+
+      <div class="mt-4 flex flex-col gap-2">
+        <a id="recWhatsappBtn" href="#" target="_blank" class="w-full text-center bg-emerald-600 text-white text-xs font-semibold py-2.5 rounded-lg hover:bg-emerald-700 transition">
+          Tuma Risiti kwa WhatsApp
+        </a>
+        <div class="flex gap-2">
+          <button onclick="window.print()" class="flex-1 bg-blue-800 text-white text-xs font-semibold py-2 rounded-lg hover:bg-blue-900 transition">
+            Chapisha (Print)
+          </button>
+          <button onclick="closeModal('receiptModal')" class="flex-1 bg-slate-200 text-slate-800 text-xs font-semibold py-2 rounded-lg hover:bg-slate-300 transition">
+            Funga
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Farm-to-Cup QR Code Traceability -->
+  <div id="qrModal" class="hidden fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl max-w-sm w-full p-6 shadow-xl text-center">
+      <div class="flex justify-between items-center mb-3">
+        <span class="bg-blue-100 text-blue-900 text-xs font-bold px-2.5 py-1 rounded">Farm-to-Cup Passport</span>
+        <button onclick="closeModal('qrModal')" class="text-slate-400 hover:text-slate-700 font-bold text-xl">&times;</button>
+      </div>
+      <h4 id="qrLotTitle" class="font-bold text-lg text-blue-950">LOT #CMM-01</h4>
+      <p id="qrLotSubtitle" class="text-xs text-slate-500 mb-4">Milambi Washed Arabica AA</p>
+
+      <div id="qrcodeContainer" class="flex justify-center p-4 bg-white border border-slate-200 rounded-xl mx-auto w-fit mb-4"></div>
+
+      <div class="bg-slate-50 rounded-lg p-3 text-left text-xs space-y-1.5 border border-slate-100">
+        <p><strong>Asili / Chama:</strong> <span id="qrOrigin"></span></p>
+        <p><strong>Mwinuko (Altitude):</strong> <span id="qrAltitude"></span></p>
+        <p><strong>Aina ya Mbegu:</strong> <span id="qrVariety"></span></p>
+        <p><strong>Alama za Ubora (SCA):</strong> <span id="qrScore" class="text-emerald-700 font-bold"></span></p>
+      </div>
+      <p class="text-[11px] text-slate-400 mt-3">Scan QR Code hii kuthibitisha uhalisia wa kahawa ya Chama cha Msingi Milambi.</p>
+    </div>
+  </div>
+
+  <!-- Modal 4: Oda ya Mnunuzi -->
+  <div id="inquiryModal" class="hidden fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl max-w-md w-full p-6 shadow-xl">
+      <div class="flex justify-between items-center mb-4">
+        <h4 class="font-bold text-lg text-blue-950">Oda ya Sampuli / Ununuzi</h4>
+        <button onclick="closeModal('inquiryModal')" class="text-slate-400 hover:text-slate-700 font-bold text-xl">&times;</button>
+      </div>
+      <form onsubmit="submitInquiry(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Jina la Mnunuzi / Kampuni</label>
+          <input type="text" id="buyerName" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" placeholder="Mfano: Nordic Roasters Ltd" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Kundi (Lot) Ulilochagua</label>
+          <input type="text" id="inquiryLot" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" value="LOT #CMM-01 (Milambi Washed Arabica AA)" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Kiasi Unachohitaji (kg)</label>
+          <input type="number" id="inquiryVolume" required min="10" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" placeholder="Mfano: 1200" />
+        </div>
+        <button type="submit" class="w-full bg-blue-800 text-white font-semibold py-2.5 rounded-lg hover:bg-blue-900 transition">
+          Tuma Oda Kupitia WhatsApp ya Chama
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 5: Mipangilio ya Chama (Bei & Namba Halisi ya WhatsApp) -->
+  <div id="settingsModal" class="hidden fixed inset-0 bg-slate-900/60 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl max-w-sm w-full p-6 shadow-xl">
+      <div class="flex justify-between items-center mb-4">
+        <h4 class="font-bold text-lg text-blue-950">Mipangilio ya Chama (Admin)</h4>
+        <button onclick="closeModal('settingsModal')" class="text-slate-400 hover:text-slate-700 font-bold text-xl">&times;</button>
+      </div>
+      <form onsubmit="saveSettings(event)" class="space-y-3.5">
+        <div class="bg-emerald-50 border border-emerald-200 p-3 rounded-lg">
+          <label class="block text-xs font-bold text-emerald-900 mb-1">Namba Halisi ya WhatsApp ya Chama</label>
+          <input type="tel" id="inputCoopWhatsapp" required class="w-full border border-emerald-300 rounded-lg px-3 py-2 text-sm font-mono" placeholder="Mfano: 255712345678" />
+          <p class="text-[11px] text-emerald-700 mt-1">Anza na 255 bila alama ya + (Mfano: 255754123456). Oda zote zitatumwa hapa.</p>
+        </div>
+
+        <hr class="border-slate-200" />
+        <p class="text-xs font-bold text-blue-950">Sasisha Bei Elekezi (TZS/kg)</p>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Bei ya Daraja A</label>
+          <input type="number" id="inputPriceA" value="7500" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Bei ya Daraja B</label>
+          <input type="number" id="inputPriceB" value="5800" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">Bei ya Maganda / Natural</label>
+          <input type="number" id="inputPriceC" value="3400" required class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm" />
+        </div>
+        <button type="submit" class="w-full bg-blue-800 text-white font-semibold py-2.5 rounded-lg hover:bg-blue-900 transition">
+          Hifadhi Mipangilio Yote
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Default Data & LocalStorage Persistence
+    let coopWhatsapp = localStorage.getItem('cmm_whatsapp') || '255700000000';
+    let prices = JSON.parse(localStorage.getItem('cmm_prices')) || { A: 7500, B: 5800, C: 3400 };
+    
+    let deliveries = JSON.parse(localStorage.getItem('cmm_deliveries')) || [
+      { id: 'CMM-1001', date: '2026-11-24', name: 'Juma Mwakalinga', phone: '255700000001', grade: 'A', weight: 240, loan: 100000, gross: 1800000, net: 1700000 },
+      { id: 'CMM-1002', date: '2026-11-25', name: 'Neema Ndelwa', phone: '255700000002', grade: 'B', weight: 180, loan: 44000, gross: 1044000, net: 1000000 }
+    ];
+
+    let schedules = JSON.parse(localStorage.getItem('cmm_schedules')) || [
+      { day: 'Jumatatu, 30 Nov 2026', zone: 'Milambi Kati & Mashariki', time: '08:00 Asubuhi - 04:00 Jioni', type: 'Parchment (Daraja A & B)' },
+      { day: 'Jumatano, 02 Des 2026', zone: 'Milambi Magharibi & Kusini', time: '08:00 Asubuhi - 04:00 Jioni', type: 'Parchment (Daraja A & B)' },
+      { day: 'Ijumaa, 04 Des 2026', zone: 'Vitongoji Vyote (Maganda)', time: '09:00 Asubuhi - 03:00 Jioni', type: 'Maganda / Natural Cherry' }
+    ];
+
+    let announcements = JSON.parse(localStorage.getItem('cmm_announcements')) || [
+      { date: '26 Nov 2026', tag: 'Muhimu', title: 'Kuzingatia Kiwango cha Unyevu (11.5%)', body: 'Wakulima wote mnakumbushwa kuanika kahawa vizuri kwenye vichanja. Kahawa yenye unyevu zaidi ya 12% itarudishwa kukaushwa tena.' },
+      { date: '24 Nov 2026', tag: 'Malipo', title: 'Malipo ya Awamu ya Kwanza Yameanza', body: 'Wanachama waliopima kahawa kuanzia tarehe 15 hadi 23 Novemba wanaweza kuhakiki risiti zao kwa karani wa chama.' },
+      { date: '20 Nov 2026', tag: 'Pembejeo', title: 'Ugawaji wa Magunia ya Katani', body: 'Magunia mapya ya kuhifadhia kahawa safi yanapatikana ofisi za Chama cha Msingi Milambi.' }
+    ];
+
+    function formatTZS(num) {
+      return Math.round(num).toLocaleString('en-US');
+    }
+
+    function cleanPhone(num) {
+      let cleaned = String(num).replace(/[^0-9]/g, '');
+      if (cleaned.startsWith('0')) {
+        cleaned = '255' + cleaned.substring(1);
+      }
+      return cleaned;
+    }
+
+    function showSection(id) {
+      document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function openModal(id) {
+      document.getElementById(id).classList.remove('hidden');
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    // Render Settings (Prices & WhatsApp)
+    function renderSettings() {
+      document.getElementById('displayPriceA').textContent = formatTZS(prices.A);
+      document.getElementById('displayPriceB').textContent = formatTZS(prices.B);
+      document.getElementById('displayPriceC').textContent = formatTZS(prices.C);
+
+      document.getElementById('inputPriceA').value = prices.A;
+      document.getElementById('inputPriceB').value = prices.B;
+      document.getElementById('inputPriceC').value = prices.C;
+      document.getElementById('inputCoopWhatsapp').value = coopWhatsapp;
+
+      document.getElementById('footerWaDisplay').textContent = `+${coopWhatsapp}`;
+      const defaultMsg = encodeURIComponent('Habari Chama cha Msingi Milambi, nahitaji maelezo zaidi kuhusu kahawa.');
+      document.getElementById('footerWaLink').href = `https://wa.me/${coopWhatsapp}?text=${defaultMsg}`;
+
+      const select = document.getElementById('calcGrade');
+      select.options[0].text = `Daraja A - Washed Parchment (TZS ${formatTZS(prices.A)}/kg)`;
+      select.options[1].text = `Daraja B - Standard Parchment (TZS ${formatTZS(prices.B)}/kg)`;
+      select.options[2].text = `Maganda / Natural Cherry (TZS ${formatTZS(prices.C)}/kg)`;
+    }
+
+    // Save Settings
+    function saveSettings(e) {
+      e.preventDefault();
+      coopWhatsapp = cleanPhone(document.getElementById('inputCoopWhatsapp').value) || '255700000000';
+      prices.A = parseFloat(document.getElementById('inputPriceA').value) || 7500;
+      prices.B = parseFloat(document.getElementById('inputPriceB').value) || 5800;
+      prices.C = parseFloat(document.getElementById('inputPriceC').value) || 3400;
+
+      localStorage.setItem('cmm_whatsapp', coopWhatsapp);
+      localStorage.setItem('cmm_prices', JSON.stringify(prices));
+
+      renderSettings();
+      renderSchedules();
+      calculatePayout();
+      closeModal('settingsModal');
+    }
+
+    // Render Schedules
+    function renderSchedules() {
+      const tbody = document.getElementById('scheduleTableBody');
+      tbody.innerHTML = '';
+      schedules.forEach((s) => {
+        const bookMsg = encodeURIComponent(`Habari Karani wa Chama cha Msingi Milambi, naomba kuweka miadi ya kuleta kahawa ghalani siku ya ${s.day} (${s.zone}).`);
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="py-3 px-3 font-semibold text-blue-950">${s.day}</td>
+          <td class="py-3 px-3 text-slate-700">${s.zone}</td>
+          <td class="py-3 px-3 text-slate-600">${s.time}</td>
+          <td class="py-3 px-3"><span class="bg-blue-50 text-blue-800 text-xs font-medium px-2 py-0.5 rounded">${s.type}</span></td>
+          <td class="py-3 px-3">
+            <a href="https://wa.me/${coopWhatsapp}?text=${bookMsg}" target="_blank" class="inline-block bg-emerald-600 text-white text-xs font-semibold px-2.5 py-1 rounded hover:bg-emerald-700 transition">
+              Weka Miadi
+            </a>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function addSchedule(e) {
+      e.preventDefault();
+      const day = document.getElementById('schedDay').value;
+      const zone = document.getElementById('schedZone').value;
+      const time = document.getElementById('schedTime').value;
+      const type = document.getElementById('schedType').value;
+
+      schedules.unshift({ day, zone, time, type });
+      localStorage.setItem('cmm_schedules', JSON.stringify(schedules));
+      renderSchedules();
+      e.target.reset();
+      closeModal('scheduleModal');
+    }
+
+    // Render Announcements
+    function renderAnnouncements() {
+      const list = document.getElementById('announcementsList');
+      list.innerHTML = '';
+      const badgeColors = {
+        'Muhimu': 'bg-red-100 text-red-800',
+        'Malipo': 'bg-emerald-100 text-emerald-800',
+        'Pembejeo': 'bg-amber-100 text-amber-800',
+        'Kikao': 'bg-blue-100 text-blue-800'
+      };
+
+      announcements.forEach((ann) => {
+        const badgeClass = badgeColors[ann.tag] || 'bg-blue-100 text-blue-800';
+        const card = document.createElement('div');
+        card.className = 'p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1';
+        card.innerHTML = `
+          <div class="flex justify-between items-center">
+            <span class="text-[11px] font-bold px-2 py-0.5 rounded ${badgeClass}">${ann.tag}</span>
+            <span class="text-[11px] text-slate-400">${ann.date}</span>
+          </div>
+          <h4 class="font-bold text-sm text-blue-950 pt-0.5">${ann.title}</h4>
+          <p class="text-xs text-slate-600 leading-relaxed">${ann.body}</p>
+        `;
+        list.appendChild(card);
+      });
+    }
+
+    function addAnnouncement(e) {
+      e.preventDefault();
+      const title = document.getElementById('annTitle').value;
+      const tag = document.getElementById('annTag').value;
+      const body = document.getElementById('annBody').value;
+      const date = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+
+      announcements.unshift({ date, tag, title, body });
+      localStorage.setItem('cmm_announcements', JSON.stringify(announcements));
+      renderAnnouncements();
+      e.target.reset();
+      closeModal('announcementModal');
+    }
+
+    // Calculator Logic
+    function calculatePayout() {
+      const grade = document.getElementById('calcGrade').value;
+      const weight = parseFloat(document.getElementById('calcWeight').value) || 0;
+      const levyPct = parseFloat(document.getElementById('calcLevy').value) || 0;
+      const loan = parseFloat(document.getElementById('calcInputLoan').value) || 0;
+
+      const unitPrice = prices[grade];
+      const gross = weight * unitPrice;
+      const levyDeduction = gross * (levyPct / 100);
+      const net = Math.max(0, gross - levyDeduction - loan);
+
+      document.getElementById('outUnit').textContent = `TZS ${formatTZS(unitPrice)} / kg`;
+      document.getElementById('outGross').textContent = `TZS ${formatTZS(gross)}`;
+      document.getElementById('outDeduction').textContent = `- TZS ${formatTZS(levyDeduction)}`;
+      document.getElementById('outLoanDeduction').textContent = `- TZS ${formatTZS(loan)}`;
+      document.getElementById('outNet').textContent = `TZS ${formatTZS(net)}`;
+    }
+
+    // Render Deliveries Table
+    function renderDeliveries() {
+      const tbody = document.getElementById('deliveryTableBody');
+      tbody.innerHTML = '';
+      const gradeLabels = { A: 'Daraja A', B: 'Daraja B', C: 'Natural' };
+      let extraKg = 0;
+
+      deliveries.forEach((item, index) => {
+        extraKg += item.weight;
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td class="py-3 px-4 text-slate-600">${item.date}</td>
+          <td class="py-3 px-4 font-medium">${item.name}</td>
+          <td class="py-3 px-4"><span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-0.5 rounded">${gradeLabels[item.grade]}</span></td>
+          <td class="py-3 px-4">${formatTZS(item.weight)} kg</td>
+          <td class="py-3 px-4 text-amber-700">-${formatTZS(item.loan)}</td>
+          <td class="py-3 px-4 font-bold text-blue-950">TZS ${formatTZS(item.net)}</td>
+          <td class="py-3 px-4">
+            <button onclick="viewReceipt(${index})" class="text-xs bg-slate-100 hover:bg-blue-100 text-blue-900 font-semibold px-2.5 py-1 rounded transition">
+              Ona Risiti
+            </button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+
+      document.getElementById('statTotalKg').textContent = `${formatTZS(14430 + extraKg)} kg`;
+    }
+
+    // Add Harvest Delivery Record
+    function addDelivery(e) {
+      e.preventDefault();
+      const name = document.getElementById('farmerName').value;
+      const phone = cleanPhone(document.getElementById('farmerPhone').value) || coopWhatsapp;
+      const grade = document.getElementById('deliveryGrade').value;
+      const weight = parseFloat(document.getElementById('deliveryWeight').value);
+      const loan = parseFloat(document.getElementById('deliveryLoan').value) || 0;
+
+      const gross = weight * prices[grade];
+      const net = Math.max(0, gross - loan);
+      const today = new Date().toISOString().split('T')[0];
+      const recId = `CMM-${1001 + deliveries.length}`;
+
+      const newRecord = { id: recId, date: today, name, phone, grade, weight, loan, gross, net };
+      deliveries.unshift(newRecord);
+      localStorage.setItem('cmm_deliveries', JSON.stringify(deliveries));
+
+      renderDeliveries();
+      e.target.reset();
+      closeModal('deliveryModal');
+      viewReceipt(0);
+    }
+
+    // View Farmer Digital Receipt
+    function viewReceipt(index) {
+      const item = deliveries[index];
+      const gradeLabels = { A: 'Daraja A', B: 'Daraja B', C: 'Natural' };
+
+      document.getElementById('recId').textContent = `#${item.id}`;
+      document.getElementById('recDate').textContent = item.date;
+      document.getElementById('recFarmer').textContent = item.name;
+      document.getElementById('recWeightGrade').textContent = `${gradeLabels[item.grade]} (${formatTZS(item.weight)} kg)`;
+      document.getElementById('recGross').textContent = `TZS ${formatTZS(item.gross)}`;
+      document.getElementById('recLoan').textContent = `- TZS ${formatTZS(item.loan)}`;
+      document.getElementById('recNet').textContent = `TZS ${formatTZS(item.net)}`;
+
+      const waMsg = encodeURIComponent(
+        `*RISITI YA KAHAWA - CHAMA CHA MSINGI MILAMBI*\n` +
+        `Namba: #${item.id}\n` +
+        `Mkulima: ${item.name}\n` +
+        `Tarehe: ${item.date}\n` +
+        `Kiasi: ${formatTZS(item.weight)} kg (${gradeLabels[item.grade]})\n` +
+        `Thamani: TZS ${formatTZS(item.gross)}\n` +
+        `Makato Pembejeo: TZS ${formatTZS(item.loan)}\n` +
+        `*Malipo Halisi: TZS ${formatTZS(item.net)}*`
+      );
+      document.getElementById('recWhatsappBtn').href = `https://wa.me/${cleanPhone(item.phone)}?text=${waMsg}`;
+
+      openModal('receiptModal');
+    }
+
+    // Generate Farm-to-Cup QR Code
+    function openTraceabilityQR(lotCode, title, origin, altitude, variety, score) {
+      document.getElementById('qrLotTitle').textContent = lotCode;
+      document.getElementById('qrLotSubtitle').textContent = title;
+      document.getElementById('qrOrigin').textContent = origin;
+      document.getElementById('qrAltitude').textContent = altitude;
+      document.getElementById('qrVariety').textContent = variety;
+      document.getElementById('qrScore').textContent = score;
+
+      const container = document.getElementById('qrcodeContainer');
+      container.innerHTML = '';
+      const qrData = `CHAMA CHA MSINGI MILAMBI\nLot: ${lotCode}\nTitle: ${title}\nOrigin: ${origin}\nAltitude: ${altitude}\nVariety: ${variety}\nSCA Score: ${score}`;
+
+      new QRCode(container, {
+        text: qrData,
+        width: 150,
+        height: 150,
+        colorDark: "#1e3a8a",
+        colorLight: "#ffffff"
+      });
+
+      openModal('qrModal');
+    }
+
+    // Buyer Inquiry via WhatsApp
+    function selectLotForInquiry(lotTitle) {
+      document.getElementById('inquiryLot').value = lotTitle;
+      openModal('inquiryModal');
+    }
+
+    function submitInquiry(e) {
+      e.preventDefault();
+      const buyer = document.getElementById('buyerName').value;
+      const lot = document.getElementById('inquiryLot').value;
+      const vol = document.getElementById('inquiryVolume').value;
+
+      const msg = encodeURIComponent(`Habari Chama cha Msingi Milambi, mimi ni ${buyer}. Nahitaji oda/sampuli ya ${lot}, kiasi cha kilo ${vol}.`);
+      window.open(`https://wa.me/${coopWhatsapp}?text=${msg}`, '_blank');
+
+      e.target.reset();
+      closeModal('inquiryModal');
+    }
+
+    // Initialize App
+    renderSettings();
+    renderSchedules();
+    renderAnnouncements();
+    calculatePayout();
+    renderDeliveries();
+  </script>
+</body>
+</html>
