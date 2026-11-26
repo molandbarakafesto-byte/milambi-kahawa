@@ -896,6 +896,7 @@
     }
 
     // Member Registration Logic
+    // Member Registration Logic
     function renderMembers() {
       const tbody = document.getElementById('membersTableBody');
       tbody.innerHTML = '';
@@ -909,13 +910,29 @@
           <td class="py-3 px-4">${formatTZS(m.trees)}</td>
           <td class="py-3 px-4">${m.acres}</td>
           <td class="py-3 px-4"><span class="bg-emerald-100 text-emerald-800 text-xs font-semibold px-2 py-0.5 rounded">${m.status}</span></td>
-          <td class="py-3 px-4">
+          <td class="py-3 px-4 flex items-center gap-1.5">
             <button onclick="viewMemberCard(${index})" class="text-xs bg-blue-50 hover:bg-blue-100 text-blue-900 font-semibold px-2.5 py-1 rounded transition">
               Ona Kadi
+            </button>
+            <button onclick="deleteMember(${index})" class="text-xs bg-red-50 hover:bg-red-100 text-red-700 font-semibold px-2.5 py-1 rounded transition" title="Futa Mwanachama">
+              Futa
             </button>
           </td>
         `;
         tbody.appendChild(row);
+      });
+
+      document.getElementById('statTotalMembers').textContent = formatTZS(309 + members.length);
+    }
+
+    function deleteMember(index) {
+      requireAdmin(() => {
+        const m = members[index];
+        if (confirm(`Una uhakika unataka kumfuta mwanachama ${m.name} (${m.id})?`)) {
+          members.splice(index, 1);
+          localStorage.setItem('cmm_members', JSON.stringify(members));
+          renderMembers();
+        }
       });
 
       document.getElementById('statTotalMembers').textContent = formatTZS(309 + members.length);
