@@ -371,10 +371,14 @@
           <h3 class="text-2xl font-bold text-blue-950">Daftari la Mavuno & Risiti za Wanachama</h3>
           <p class="text-sm text-slate-600">Rekodi kahawa iliyopokelewa ghalani (inalindwa kwa PIN ya Karani), kata deni la pembejeo, na utoe risiti.</p>
         </div>
-        <button onclick="requireAdmin(() => openModal('deliveryModal'))" class="bg-blue-800 text-white text-sm font-semibold px-4 py-2.5 rounded-lg hover:bg-blue-900 transition">
-          &#128274; + Ingiza Mavuno Mapya
-        </button>
-      </div>
+        <div class="flex flex-wrap gap-2">
+          <button onclick="exportDeliveriesCSV()" class="bg-emerald-700 text-white text-sm font-semibold px-4 py-2.5 rounded-lg hover:bg-emerald-800 transition">
+            &#8681; Pakua Ripoti (CSV)
+          </button>
+          <button onclick="requireAdmin(() => openModal('deliveryModal'))" class="bg-blue-800 text-white text-sm font-semibold px-4 py-2.5 rounded-lg hover:bg-blue-900 transition">
+            &#128274; + Ingiza Mavuno Mapya
+          </button>
+        </div>
 
       <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse text-sm">
@@ -1258,6 +1262,56 @@ function updateLotStats() {
     calculatePayout();
     renderDeliveries();
     updateLotStats();
+    function populateFarmerSelect() {
+      const select = document.getElementById('farmerSelect');
+      if (!select) return;
+      select.innerHTML = '<option value="">-- Chagua Mwanachama --</option>';
+      members.forEach((m, idx) => {
+        const opt = document.createElement('option');
+        opt.value = idx;
+        opt.textContent = `${m.id} - ${m.name} (${m.zone})`;
+        select.appendChild(opt);
+      });
+    }
+
+    function onSelectFarmer() {
+      const idx = document.getElementById('farmerSelect').value;
+      if (idx === '') return;
+      const m = members[idx];
+      document.getElementById('farmerName').value = m.name;
+      document.getElementById('farmerPhone').value = m.phone;
+    }
+
+    function exportDeliveriesCSV() {
+      if (!deliveries.length) {
+        alert('Hakuna rekodi za mavuno za kupakua bado.');
+        return;
+      }
+      const gradeLabels = { A: 'Daraja A', B: 'Daraja B', C: 'Natural' };
+      const headers = ['Namba ya Risiti', 'Tarehe', 'Jina la Mkulima', 'Simu', 'Daraja', 'Uzito (kg)', 'Thamani Ghafi (TZS)', 'Pembejeo (TZS)', 'Malipo Halisi (TZS)'];
+      const rows = deliveries.map(d => [
+        d.id,
+        d.date,
+        `"${String(d.name).replace(/"/g, '""')}"`,
+        d.phone,
+        gradeLabels[d.grade] || d.grade,
+        d.weight,
+        d.gross,
+        d.loan,
+        d.net
+      ].join(','));
+
+      const csvContent = '\uFEFF' + [headers.join(','), ...rows].join('\n');
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Mavuno_Milambi_AMCOS_${new Date().toISOString().split('T')[0]}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    populateFarmerSelect();
     
   </script>
 </body>
