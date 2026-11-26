@@ -80,25 +80,25 @@
           </button>
         </div>
       </div>
-      <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5 grid grid-cols-2 gap-4 text-center">
+     <div class="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-5 grid grid-cols-2 gap-4 text-center">
         <div class="bg-blue-950/50 p-4 rounded-lg">
           <p class="text-xs text-blue-200 uppercase">Jumla ya Mavuno</p>
-          <p id="statTotalKg" class="text-2xl font-extrabold mt-1">14,850 kg</p>
+          <p id="statTotalKg" class="text-2xl font-extrabold mt-1">0 kg</p>
         </div>
         <div class="bg-blue-950/50 p-4 rounded-lg">
           <p class="text-xs text-blue-200 uppercase">Wakulima Wanachama</p>
-          <p id="statTotalMembers" class="text-2xl font-extrabold mt-1">312</p>
+          <p id="statTotalMembers" class="text-2xl font-extrabold mt-1">0</p>
         </div>
         <div class="bg-blue-950/50 p-4 rounded-lg">
           <p class="text-xs text-blue-200 uppercase">Wastani wa Ladha</p>
-          <p class="text-2xl font-extrabold mt-1">86.5 SCA</p>
+          <p id="statAvgSca" class="text-2xl font-extrabold mt-1">0.0 SCA</p>
         </div>
         <div class="bg-blue-950/50 p-4 rounded-lg">
           <p class="text-xs text-blue-200 uppercase">Makundi (Lots) Tayari</p>
-          <p class="text-2xl font-extrabold mt-1">3 Lots</p>
+          <p id="statTotalLots" class="text-2xl font-extrabold mt-1">0 Lots</p>
         </div>
       </div>
-    </div>
+      
   </section>
 
   <main class="max-w-6xl mx-auto px-4 py-10 space-y-14">
@@ -922,7 +922,7 @@
         tbody.appendChild(row);
       });
 
-      document.getElementById('statTotalMembers').textContent = formatTZS(309 + members.length);
+      document.getElementById('statTotalMembers').textContent = formatTZS( members.length);
     }
 
     function deleteMember(index) {
@@ -935,7 +935,7 @@
         }
       });
 
-      document.getElementById('statTotalMembers').textContent = formatTZS(309 + members.length);
+      document.getElementById('statTotalMembers').textContent = formatTZS( members.length);
     }
 
     function registerMember(e) {
@@ -1144,7 +1144,7 @@
         tbody.appendChild(row);
       });
 
-      document.getElementById('statTotalKg').textContent = `${formatTZS(14430 + extraKg)} kg`;
+      document.getElementById('statTotalKg').textContent = `${formatTZS(extraKg)} kg`;
     }
 
     function addDelivery(e) {
@@ -1237,6 +1237,28 @@
       e.target.reset();
       closeModal('inquiryModal');
     }
+function updateLotStats() {
+      const lotsSection = document.getElementById('lots');
+      const cards = lotsSection.querySelectorAll('.grid > div');
+      const scaMatches = lotsSection.textContent.match(/(\d+(?:\.\d+)?)\s*SCA Score/g) || [];
+      let totalSca = 0;
+      scaMatches.forEach(item => { totalSca += parseFloat(item); });
+
+      const avgSca = scaMatches.length > 0 ? (totalSca / scaMatches.length).toFixed(2) : '0.00';
+      document.getElementById('statTotalLots').textContent = `${cards.length} Lots`;
+      document.getElementById('statAvgSca').textContent = `${avgSca} SCA`;
+    }
+function updateLotStats() {
+      const lotsSection = document.getElementById('lots');
+      const cards = lotsSection.querySelectorAll('.grid > div');
+      const scaMatches = lotsSection.textContent.match(/(\d+(?:\.\d+)?)\s*SCA Score/g) || [];
+      let totalSca = 0;
+      scaMatches.forEach(item => { totalSca += parseFloat(item); });
+
+      const avgSca = scaMatches.length > 0 ? (totalSca / scaMatches.length).toFixed(2) : '0.00';
+      document.getElementById('statTotalLots').textContent = `${cards.length} Lots`;
+      document.getElementById('statAvgSca').textContent = `${avgSca} SCA`;
+    }
 
     // Initialize App
     updateAdminUI();
@@ -1246,6 +1268,8 @@
     renderAnnouncements();
     calculatePayout();
     renderDeliveries();
+    updateLotStats();
+    
   </script>
 </body>
 </html>
