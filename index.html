@@ -1380,7 +1380,7 @@ function renderKageraLots(filterType = "ALL") {
 
   grid.innerHTML = list.map((lot) => {
     const waText = `Habari Chama cha Msingi Milambi, naomba sampuli ya kahawa (Soko la Kagera): ${lot.code} - ${lot.title} (${lot.priceLabel}).`;
-    const waLink = `https://wa.me/255766536946&text=${encodeURIComponent(waText)}`;
+    const waLink = `https://wa.me/255766536946&text= ${encodeURIComponent(waText)} `;
     return `
       <div class="border border-slate-200 rounded-xl p-5 flex flex-col justify-between">
         <div>
