@@ -288,81 +288,62 @@
       </div>
     </section>
 
-    <!-- Section 3: Soko la Wanunuzi & Farm-to-Cup QR Traceability -->
-    <section id="lots">
-      <div class="mb-6">
-        <h3 class="text-2xl font-bold text-blue-950">Makundi ya Kahawa & Ufuatiliaji (QR Traceability)</h3>
-        <p class="text-sm text-slate-600">Bonyeza <strong>"Ona QR & Asili"</strong> kuthibitisha chanzo cha kahawa kutoka Milambi au tuma oda ya sampuli.</p>
-      </div>
+    <!-- Section 3: Soko & Bei Elekezi za Kahawa - Mkoa wa Kagera -->
+<section id="lots" class="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm space-y-6 my-8">
+  <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+    <div>
+      <span class="inline-block text-xs font-bold uppercase tracking-wider px-2.5 py-1 rounded bg-emerald-100 text-emerald-800">
+        Soko la Kahawa &bull; Mkoa wa Kagera
+      </span>
+      <h3 class="text-2xl font-bold text-blue-950 mt-2">
+        Soko &amp; Bei Elekezi za Kahawa &mdash; Kagera
+      </h3>
+      <p class="text-sm text-slate-600 mt-1">
+        Bei za soko la Kagera (Robusta &amp; Arabika) na maombi ya sampuli kwa wanunuzi.
+      </p>
+    </div>
 
-      <div class="grid md:grid-cols-3 gap-6">
-        <!-- Lot 1 -->
-        <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between">
-          <div class="p-6">
-            <div class="flex justify-between items-start mb-3">
-              <span class="bg-blue-900 text-white text-xs font-bold px-2.5 py-1 rounded">LOT #CMM-01</span>
-              <span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded">87.25 SCA Score</span>
-            </div>
-            <h4 class="font-bold text-lg text-slate-900">Milambi Washed Arabica AA</h4>
-            <p class="text-xs text-slate-500 mt-1">Mwinuko: 1,750m &bull; Aina: Bourbon & Kent</p>
-            <p class="text-sm text-slate-600 mt-3"><strong>Ladha:</strong> Chungwa, chokoleti nyeusi, na utamu wa miwa.</p>
-            <p class="text-sm font-semibold text-blue-900 mt-3">Kiasi Kilichopo: 4,200 kg (Mifuko 70)</p>
-          </div>
-          <div class="bg-slate-50 px-4 py-3 border-t border-slate-100 flex gap-2">
-            <button onclick="openTraceabilityQR('LOT #CMM-01', 'Milambi Washed Arabica AA', 'Chama cha Msingi Milambi', '1,750m ASL', 'Bourbon & Kent', '87.25 pts')" class="flex-1 border border-blue-800 text-blue-900 text-xs font-semibold py-2 rounded hover:bg-blue-50 transition">
-              Ona QR & Asili
-            </button>
-            <button onclick="selectLotForInquiry('LOT #CMM-01 (Milambi Washed Arabica AA)')" class="flex-1 bg-blue-800 text-white text-xs font-semibold py-2 rounded hover:bg-blue-900 transition">
-              Omba Sampuli
-            </button>
-          </div>
-        </div>
+    <div class="flex flex-wrap gap-2">
+      <button type="button" onclick="filterKageraLots('ALL')" data-filter="ALL"
+        class="kagera-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-900 text-white cursor-pointer">
+        Zote
+      </button>
+      <button type="button" onclick="filterKageraLots('ROBUSTA')" data-filter="ROBUSTA"
+        class="kagera-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 cursor-pointer">
+        Robusta (Kagera)
+      </button>
+      <button type="button" onclick="filterKageraLots('ARABICA')" data-filter="ARABICA"
+        class="kagera-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 cursor-pointer">
+        Arabika (Kagera)
+      </button>
+    </div>
+  </div>
 
-        <!-- Lot 2 -->
-        <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between">
-          <div class="p-6">
-            <div class="flex justify-between items-start mb-3">
-              <span class="bg-blue-900 text-white text-xs font-bold px-2.5 py-1 rounded">LOT #CMM-02</span>
-              <span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded">86.00 SCA Score</span>
-            </div>
-            <h4 class="font-bold text-lg text-slate-900">Milambi Honey Peaberry</h4>
-            <p class="text-xs text-slate-500 mt-1">Mwinuko: 1,680m &bull; Aina: N39 & KP423</p>
-            <p class="text-sm text-slate-600 mt-3"><strong>Ladha:</strong> Matunda mabivu, caramel, na uzito laini mdomoni.</p>
-            <p class="text-sm font-semibold text-blue-900 mt-3">Kiasi Kilichopo: 1,800 kg (Mifuko 30)</p>
-          </div>
-          <div class="bg-slate-50 px-4 py-3 border-t border-slate-100 flex gap-2">
-            <button onclick="openTraceabilityQR('LOT #CMM-02', 'Milambi Honey Peaberry', 'Chama cha Msingi Milambi', '1,680m ASL', 'N39 & KP423', '86.00 pts')" class="flex-1 border border-blue-800 text-blue-900 text-xs font-semibold py-2 rounded hover:bg-blue-50 transition">
-              Ona QR & Asili
-            </button>
-            <button onclick="selectLotForInquiry('LOT #CMM-02 (Milambi Honey Peaberry)')" class="flex-1 bg-blue-800 text-white text-xs font-semibold py-2 rounded hover:bg-blue-900 transition">
-              Omba Sampuli
-            </button>
-          </div>
-        </div>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div class="border border-slate-200 rounded-xl p-4">
+      <p class="text-xs font-semibold text-slate-500">Robusta Maganda (Kagera)</p>
+      <p class="text-xl font-extrabold text-blue-950 mt-1">TZS 3,400 <span class="text-xs font-normal text-slate-500">/ kg</span></p>
+      <p class="text-[11px] text-emerald-700 mt-1">Wastani wa soko &bull; Unyevu &le; 12.5%</p>
+    </div>
+    <div class="border border-slate-200 rounded-xl p-4">
+      <p class="text-xs font-semibold text-slate-500">Robusta Safi (Soko / TMX)</p>
+      <p class="text-xl font-extrabold text-blue-950 mt-1">$2.90 <span class="text-xs font-normal text-slate-500">/ kg (~TZS 11k)</span></p>
+      <p class="text-[11px] text-slate-600 mt-1">Rejea ya mnada &amp; soko la bidhaa</p>
+    </div>
+    <div class="border border-slate-200 rounded-xl p-4">
+      <p class="text-xs font-semibold text-slate-500">Arabika HP (Kagera / Karagwe)</p>
+      <p class="text-xl font-extrabold text-blue-950 mt-1">TZS 9,000 <span class="text-xs font-normal text-slate-500">/ kg</span></p>
+      <p class="text-[11px] text-slate-600 mt-1">Wastani wa soko la kahawa ghafi</p>
+    </div>
+    <div class="border border-slate-200 rounded-xl p-4">
+      <p class="text-xs font-semibold text-slate-500">Arabika Safi (Mnada TCB)</p>
+      <p class="text-xl font-extrabold text-blue-950 mt-1">$6.20 <span class="text-xs font-normal text-slate-500">/ kg</span></p>
+      <p class="text-[11px] text-slate-600 mt-1">Bei ya mnada wa kahawa safi</p>
+    </div>
+  </div>
 
-        <!-- Lot 3 -->
-        <div class="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm flex flex-col justify-between">
-          <div class="p-6">
-            <div class="flex justify-between items-start mb-3">
-              <span class="bg-blue-900 text-white text-xs font-bold px-2.5 py-1 rounded">LOT #CMM-03</span>
-              <span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded">85.50 SCA Score</span>
-            </div>
-            <h4 class="font-bold text-lg text-slate-900">Milambi Sun-Dried Natural</h4>
-            <p class="text-xs text-slate-500 mt-1">Mwinuko: 1,620m &bull; Aina: Bourbon</p>
-            <p class="text-sm text-slate-600 mt-3"><strong>Ladha:</strong> Beri za porini, kakao, na harufu tamu ya mvinyo.</p>
-            <p class="text-sm font-semibold text-blue-900 mt-3">Kiasi Kilichopo: 3,000 kg (Mifuko 50)</p>
-          </div>
-          <div class="bg-slate-50 px-4 py-3 border-t border-slate-100 flex gap-2">
-            <button onclick="openTraceabilityQR('LOT #CMM-03', 'Milambi Sun-Dried Natural', 'Chama cha Msingi Milambi', '1,620m ASL', 'Bourbon', '85.50 pts')" class="flex-1 border border-blue-800 text-blue-900 text-xs font-semibold py-2 rounded hover:bg-blue-50 transition">
-              Ona QR & Asili
-            </button>
-            <button onclick="selectLotForInquiry('LOT #CMM-03 (Milambi Sun-Dried Natural)')" class="flex-1 bg-blue-800 text-white text-xs font-semibold py-2 rounded hover:bg-blue-900 transition">
-              Omba Sampuli
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
+  <div id="kageraLotsGrid" class="grid md:grid-cols-3 gap-6"></div>
+</section>
 
     <!-- Section 4: Kadi ya Mkulima, Makato ya Pembejeo & Risiti -->
     <section id="production" class="bg-white border border-slate-200 rounded-2xl p-6 md:p-8 shadow-sm">
@@ -1361,7 +1342,80 @@ function updateLotStats() {
           renderAnnouncements();
         }
       });
-    }
+    } 
+        const kageraMarketLots = [
+  {
+    code: "KGR-ROB-01",
+    type: "ROBUSTA",
+    priceLabel: "TZS 3,400 / kg",
+    title: "Bukoba & Muleba Robusta Maganda",
+    meta: "Wilaya: Bukoba / Muleba • Unyevu: 12.0%",
+    stock: "Kiasi Kilichopo: 6,500 kg"
+  },
+  {
+    code: "KGR-ROB-02",
+    type: "ROBUSTA",
+    priceLabel: "$2.90 / kg (~TZS 11k)",
+    title: "Missenyi & Kyerwa Robusta Selection",
+    meta: "Wilaya: Missenyi / Kyerwa • Unyevu: 11.8%",
+    stock: "Kiasi Kilichopo: 4,200 kg"
+  },
+  {
+    code: "KGR-ARB-03",
+    type: "ARABICA",
+    priceLabel: "TZS 9,000 / kg",
+    title: "Karagwe & Kyerwa Highland Arabica",
+    meta: "Wilaya: Karagwe / Kyerwa • Mwinuko: 1,550m+",
+    stock: "Kiasi Kilichopo: 2,100 kg"
+  }
+];
+
+function renderKageraLots(filterType = "ALL") {
+  const grid = document.getElementById("kageraLotsGrid");
+  if (!grid) return;
+
+  const list = filterType === "ALL"
+    ? kageraMarketLots
+    : kageraMarketLots.filter((item) => item.type === filterType);
+
+  grid.innerHTML = list.map((lot) => {
+    const waText = `Habari Chama cha Msingi Milambi, naomba sampuli ya kahawa (Soko la Kagera): ${lot.code} - ${lot.title} (${lot.priceLabel}).`;
+    const waLink = `https://wa.me/255766536946?text=${encodeURIComponent(waText)}`;
+    return `
+      <div class="border border-slate-200 rounded-xl p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-start gap-2 mb-2">
+            <span class="bg-blue-900 text-white text-xs font-bold px-2.5 py-1 rounded">${lot.code}</span>
+            <span class="text-xs font-semibold text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded">${lot.priceLabel}</span>
+          </div>
+          <h4 class="font-bold text-base text-slate-900">${lot.title}</h4>
+          <p class="text-xs text-slate-500 mt-1">${lot.meta}</p>
+          <p class="text-sm font-semibold text-blue-900 mt-3">${lot.stock}</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100">
+          <a href="${waLink}" target="_blank" rel="noopener noreferrer"
+            class="block text-center bg-blue-800 text-white text-xs font-semibold py-2 rounded hover:bg-blue-900 transition">
+            Omba Sampuli (WhatsApp)
+          </a>
+        </div>
+      </div>
+    `;
+  }).join("");
+}
+
+function filterKageraLots(filterType) {
+  document.querySelectorAll(".kagera-filter-btn").forEach((btn) => {
+    const active = btn.getAttribute("data-filter") === filterType;
+    btn.className = active
+      ? "kagera-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-blue-900 text-white cursor-pointer"
+      : "kagera-filter-btn px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 cursor-pointer";
+  });
+  renderKageraLots(filterType);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderKageraLots("ALL");
+});
     
   </script>
 </body>
