@@ -962,7 +962,7 @@
         `Idadi ya Mikahawa: ${formatTZS(m.trees)}\n` +
         `Ukubwa wa Shamba: ${m.acres} Ekari`
       );
-      document.getElementById('cardWhatsappBtn').href = `https://api.whatsapp.com/send?phone=${cleanPhone(m.phone)}?text=${waMsg}`;
+      document.getElementById('cardWhatsappBtn').href = `https://api.whatsapp.com/send?phone=${cleanPhone(m.phone)}&text=${waMsg}`;
       openModal('memberCardModal');
     }
 
@@ -979,7 +979,7 @@
 
       document.getElementById('footerWaDisplay').textContent = `+${coopWhatsapp}`;
       const defaultMsg = encodeURIComponent('Habari Chama cha Msingi Milambi, nahitaji maelezo zaidi kuhusu kahawa.');
-      document.getElementById('footerWaLink').href = `https://api.whatsapp.com/send?phone=${coopWhatsapp}?text=${defaultMsg}`;
+      document.getElementById('footerWaLink').href = `https://api.whatsapp.com/send?phone=${coopWhatsapp}&text=${defaultMsg}`;
 
       const select = document.getElementById('calcGrade');
       select.options[0].text = `Daraja A - Washed Parchment (TZS ${formatTZS(prices.A)}/kg)`;
@@ -1023,7 +1023,7 @@
           <td class="py-3 px-3 text-slate-600">${s.time}</td>
           <td class="py-3 px-3"><span class="bg-blue-50 text-blue-800 text-xs font-medium px-2 py-0.5 rounded">${s.type}</span></td>
           <td class="py-3 px-3 flex items-center gap-1.5">
-            <a href="https://api.whatsapp.com/send?phone=${coopWhatsapp}?text=${bookMsg}" target="_blank" class="inline-block bg-emerald-600 text-white text-xs font-semibold px-2.5 py-1 rounded hover:bg-emerald-700 transition">
+            <a href="https://api.whatsapp.com/send?phone=${coopWhatsapp}&text=${bookMsg}" target="_blank" class="inline-block bg-emerald-600 text-white text-xs font-semibold px-2.5 py-1 rounded hover:bg-emerald-700 transition">
               Weka Miadi
             </a>
             <button onclick="deleteSchedule(${index})" class="text-xs bg-red-50 hover:bg-red-100 text-red-700 font-semibold px-2 py-1 rounded transition">
@@ -1193,7 +1193,7 @@
         `Makato Pembejeo: TZS ${formatTZS(item.loan)}\n` +
         `*Malipo Halisi: TZS ${formatTZS(item.net)}*`
       );
-      document.getElementById('recWhatsappBtn').href = `https://api.whatsapp.com/send?phone=${cleanPhone(item.phone)}?text=${waMsg}`;
+      document.getElementById('recWhatsappBtn').href = `https://api.whatsapp.com/send?phone=${cleanPhone(item.phone)}&text=${waMsg}`;
 
       openModal('receiptModal');
     }
@@ -1233,7 +1233,7 @@
       const vol = document.getElementById('inquiryVolume').value;
 
       const msg = encodeURIComponent(`Habari Chama cha Msingi Milambi, mimi ni ${buyer}. Nahitaji oda/sampuli ya ${lot}, kiasi cha kilo ${vol}.`);
-      window.open(`https://api.whatsapp.com/send?phone=${coopWhatsapp}?text=${msg}`, '_blank');
+      window.open(`https://api.whatsapp.com/send?phone=${coopWhatsapp}&text=${msg}`, '_blank');
 
       e.target.reset();
       closeModal('inquiryModal');
@@ -1380,7 +1380,7 @@ function renderKageraLots(filterType = "ALL") {
 
   grid.innerHTML = list.map((lot) => {
     const waText = `Habari Chama cha Msingi Milambi, naomba sampuli ya kahawa (Soko la Kagera): ${lot.code} - ${lot.title} (${lot.priceLabel}).`;
-    const waLink = `https://wa.me/255766536946?text=${encodeURIComponent(waText)}`;
+    const waLink = `https://wa.me/255766536946&text=${encodeURIComponent(waText)}`;
     return `
       <div class="border border-slate-200 rounded-xl p-5 flex flex-col justify-between">
         <div>
